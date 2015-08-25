@@ -11,33 +11,71 @@
     <link rel="stylesheet" href="styles/main.css">
    
     <!-- d3 -->
-    <script src="/bower_components/d3/d3.js" charset="utf-8"></script>
-    
+    <script src="../bower_components/d3/d3.js" charset="utf-8"></script>
+    <style type="text/css">
+      div {
+        background-color: red;
+        font-size: 10px;
+        color: white;
+        text-align: right;
+        height: 15px;
+        padding: 1px;
+        border: 1px solid white;
+      }
+    </style>
   </head>
   <body>
 
     
-    <div class="container">
-   
-     
-    </div>
+
+    <section class="container">
+      
+    <!--   Here
+         <svg>
+            <g transform='translate(80, 50)'>
+                <circle cx=30 cy=10 r=30 fill='#CCFFE5'>
+                </circle>
+                <circle cx=80 cy=10 r=30 fill='#CCFFCC'>
+                </circle>
+            </g>
+        </svg> -->
+     <!--    <p>Hello</p>
+        <p>World</p>
+        <p>Hello</p>
+        <p>World</p> -->
+    </section>
     
     
     <!-- // <script src="/bower_components/jquery/dist/jquery.js"></script> -->
     <script>
         //D3 code goes here...
-        //
+      var data = [3, 7, 21, 31, 35, 42];
+
+      var x = d3.scale.linear()
+        .domain([7, d3.max(data)])
+        .range([0, 800]);
+
+
+      d3.select('.container').selectAll('div')
+        .data(data)
+        .enter().append("div")
+        .style('width', function(d){ if(d < 7) {return '0px';} else { return x(d)+ 'px';}})
+        .text(function(d){ return d;})
+
+
+
+      
       d3.csv("data/data.csv", function(d) {
-        console.log('data is', d);
+        console.log('d', d.Make);
+
         return {
           year: new Date(+d.Year, 0, 1), // convert "Year" column to Date
           make: d.Make,
           model: d.Model,
           length: +d.Length // convert "Length" column to number
         };
-
       }, function(error, rows) {
-        console.log(rows);
+        console.log('error', rows);
       });
 
     </script>
